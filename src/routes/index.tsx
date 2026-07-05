@@ -1126,7 +1126,7 @@ function Footer() {
             <div className="text-sm font-semibold mb-3">Social</div>
             <div className="flex gap-3">
               {[FaGithub, FaLinkedin, FaFacebook, FaInstagram, FaTwitter].map((Ic, i) => (
-                <a key={i} href="#" whileHover={{ y: -3 }} as="a"
+                <a key={i} href="#"
                    className="grid h-10 w-10 place-items-center rounded-full glass hover:-translate-y-1 transition">
                   <Ic />
                 </a>
