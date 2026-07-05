@@ -500,23 +500,21 @@ function MagneticButton({
   return (
     <motion.button
       ref={ref}
-      style={{ x: sx, y: sy }}
+      style={{
+        x: sx, y: sy,
+        backgroundImage: primary ? "var(--gradient-brand)" : undefined,
+      }}
       onMouseMove={handle}
       onMouseLeave={leave}
       onClick={onClick}
-      className={`inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition ${
+      className={`relative inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition ${
         primary
           ? "text-white shadow-[var(--shadow-glow)]"
           : "glass hover:bg-white/10 text-foreground"
       }`}
       whileTap={{ scale: 0.96 }}
     >
-      <span className="pointer-events-none flex items-center gap-2" style={primary ? undefined : undefined}>
-        {children}
-      </span>
-      {primary && (
-        <span className="absolute inset-0 -z-10 rounded-full" style={{ backgroundImage: "var(--gradient-brand)" }} />
-      )}
+      {children}
     </motion.button>
   );
 }
