@@ -565,14 +565,14 @@ function About() {
           >
             <div className="absolute -top-16 -right-16 h-40 w-40 rounded-full"
                  style={{ backgroundImage: "var(--gradient-brand)", filter: "blur(40px)", opacity: 0.5 }} />
-            <img src={profileImg} alt="Israt" className="h-28 w-28 rounded-2xl object-cover" width={112} height={112} />
-            <h3 className="mt-5 text-2xl font-bold">Israt</h3>
-            <p className="text-muted-foreground">Frontend Developer · UI Designer</p>
+            <img src={profileImg} alt="Israt Jahan" className="h-28 w-28 rounded-2xl object-cover" width={112} height={112} />
+            <h3 className="mt-5 text-2xl font-bold">Israt Jahan</h3>
+            <p className="text-muted-foreground">Software Engineering Student · Digital Marketing Head</p>
             <div className="mt-6 space-y-2 text-sm">
               <Row k="Location" v="Dhaka, Bangladesh" />
-              <Row k="Email" v="hello@israt.dev" />
-              <Row k="Experience" v="3+ Years" />
-              <Row k="Freelance" v="Available" />
+              <Row k="Email" v="ijr4356@gmail.com" />
+              <Row k="Phone" v="+880-1635-745881" />
+              <Row k="Status" v="Open to opportunities" />
             </div>
           </motion.div>
 
@@ -582,22 +582,22 @@ function About() {
             className="lg:col-span-3 space-y-5"
           >
             <p className="text-lg leading-relaxed">
-              I'm a frontend developer who lives at the intersection of{" "}
-              <span className="gradient-text font-semibold">design</span> and{" "}
-              <span className="gradient-text font-semibold">code</span>.
-              For the past few years I've helped startups and creators launch
-              beautifully-crafted, high-performing products — from marketing
-              sites to full SaaS dashboards.
+              I'm a <span className="gradient-text font-semibold">Software Engineering</span> undergraduate
+              with a strong foundation in <span className="gradient-text font-semibold">web development</span> and
+              <span className="gradient-text font-semibold"> digital marketing</span>. Skilled in HTML, CSS,
+              JavaScript, software development fundamentals, social media marketing, content creation
+              and audience engagement.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              When I'm not coding you'll find me sketching interfaces, exploring
-              motion design, or geeking out over color palettes.
+              I'm passionate about building user-focused digital solutions by combining technical
+              expertise with creative marketing strategies — a quick learner with strong problem-solving,
+              communication and teamwork skills.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 pt-2">
-              <Feature icon={FaBolt} title="Fast" desc="Snappy UIs, obsessed with Core Web Vitals." />
-              <Feature icon={FaPaintBrush} title="Design-led" desc="Every pixel considered — motion included." />
-              <Feature icon={FaCode} title="Clean Code" desc="Typed, modular and easy to iterate on." />
-              <Feature icon={FaRocket} title="Shipping" desc="From Figma to production — end to end." />
+              <Feature icon={FaCode} title="Web Development" desc="HTML, CSS, JavaScript and modern React." />
+              <Feature icon={FaPaintBrush} title="Digital Marketing" desc="Content, campaigns and community growth." />
+              <Feature icon={FaBolt} title="Fast Learner" desc="Quickly pick up tools, frameworks and workflows." />
+              <Feature icon={FaRocket} title="Team Player" desc="Strong communication and collaboration." />
             </div>
           </motion.div>
         </div>
