@@ -1,31 +1,34 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import {
   motion,
   useMotionValue,
   useScroll,
   useSpring,
-  useTransform,
   AnimatePresence,
   useInView,
 } from "framer-motion";
 import {
-  FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaJs, FaGitAlt, FaGithub,
-  FaBootstrap, FaFigma, FaLinkedin, FaFacebook, FaInstagram, FaTwitter,
+  FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaJs, FaGithub,
+  FaBootstrap, FaFacebook, FaInstagram,
   FaDownload, FaEnvelope, FaArrowUp, FaSun, FaMoon, FaMapMarkerAlt,
   FaCode, FaMobileAlt, FaRocket, FaPaintBrush, FaBolt, FaQuoteLeft,
-  FaStar, FaExternalLinkAlt, FaBars, FaTimes, FaChevronDown,
+  FaStar, FaExternalLinkAlt, FaBars, FaTimes, FaChevronDown, FaPhone,
 } from "react-icons/fa";
-import { SiExpress, SiMongodb, SiFirebase, SiTailwindcss, SiTypescript } from "react-icons/si";
+import { SiExpress, SiMongodb, SiFirebase, SiTailwindcss, SiTypescript, SiMysql, SiC } from "react-icons/si";
 import { HiOutlineSparkles } from "react-icons/hi2";
 
 import profileImg from "@/assets/israt-profile.jpg";
 import p1 from "@/assets/project-1.jpg";
 import p2 from "@/assets/project-2.jpg";
-import p3 from "@/assets/project-3.jpg";
-import p4 from "@/assets/project-4.jpg";
-import p5 from "@/assets/project-5.jpg";
-import p6 from "@/assets/project-6.jpg";
+
+const SOCIALS = {
+  github: "https://github.com/israt-158",
+  facebook: "https://www.facebook.com/israt.jahan.reya.2025",
+  instagram: "https://www.instagram.com/israt_jahan_reya2/",
+  email: "mailto:ijr4356@gmail.com",
+};
 
 export const Route = createFileRoute("/")({
   component: PortfolioPage,
