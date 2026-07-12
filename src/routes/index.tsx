@@ -458,7 +458,7 @@ function Hero() {
             <MagneticButton
   onClick={() => {
     const link = document.createElement("a");
-    link.href = "/cv.pdf";
+    link.href = "/CV- Israt Jahan.pdf";
     link.download = "Israt_Jahan_CV.pdf";
     link.click();
   }}
