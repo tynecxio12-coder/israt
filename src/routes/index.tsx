@@ -289,7 +289,7 @@ function Navbar({ dark, setDark }: { dark: boolean; setDark: (v: boolean) => voi
         <button onClick={() => go("home")} className="flex items-center gap-2">
           <span className="grid h-9 w-9 place-items-center rounded-xl text-white font-bold"
                 style={{ backgroundImage: "var(--gradient-brand)" }}>I</span>
-          <span className="font-display text-lg font-semibold">Israt<span className="gradient-text">.</span></span>
+          <span className="font-display text-lg font-semibold">Israt Jahan<span className="gradient-text">.</span></span>
         </button>
 
         <nav className="hidden lg:flex items-center gap-1">
@@ -443,7 +443,7 @@ function Hero() {
             Available for freelance
           </span>
           <h1 className="mt-6 font-display text-5xl md:text-7xl font-bold leading-[1.05]">
-            Hi, I'm <span className="gradient-text">Israt</span>
+            Hi, I'm <span className="gradient-text">Israt Jahan</span>
             <br />
             <span className="text-foreground/90">a </span>
             <TypingText words={["Frontend Dev", "UI/UX Designer", "React Engineer", "Creative Coder"]} />
@@ -1182,7 +1182,7 @@ function Footer() {
             <div className="flex items-center gap-2">
               <span className="grid h-9 w-9 place-items-center rounded-xl text-white font-bold"
                     style={{ backgroundImage: "var(--gradient-brand)" }}>I</span>
-              <span className="font-display text-lg font-semibold">Israt<span className="gradient-text">.</span></span>
+              <span className="font-display text-lg font-semibold">Israt Jahan<span className="gradient-text">.</span></span>
             </div>
             <p className="mt-3 text-sm text-muted-foreground max-w-xs">
               Software Engineering undergraduate blending web development with digital marketing.
@@ -1216,7 +1216,7 @@ function Footer() {
           </div>
         </div>
         <div className="mt-6 text-center text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Israt. Crafted with <span className="gradient-text font-semibold">love</span> & React.
+          © {new Date().getFullYear()} Israt Jahan. All rights reserved.
         </div>
       </div>
     </footer>
