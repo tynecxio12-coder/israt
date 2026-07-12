@@ -1185,7 +1185,7 @@ function Footer() {
               <span className="font-display text-lg font-semibold">Israt<span className="gradient-text">.</span></span>
             </div>
             <p className="mt-3 text-sm text-muted-foreground max-w-xs">
-              Frontend developer crafting animated, premium web experiences.
+              Software Engineering undergraduate blending web development with digital marketing.
             </p>
           </div>
           <div>
