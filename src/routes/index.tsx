@@ -835,10 +835,10 @@ function ProjectCard({ p, i }: { p: typeof PROJECTS[number]; i: number }) {
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition"
                  style={{ background: "linear-gradient(180deg, transparent, rgba(15,23,42,0.85))" }} />
             <div className="absolute inset-x-4 bottom-4 flex gap-2 opacity-0 group-hover:opacity-100 transition translate-y-2 group-hover:translate-y-0">
-              <a href="#" className="inline-flex items-center gap-1.5 rounded-full glass px-3 py-1.5 text-xs font-medium">
+              <a href={p.code} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-full glass px-3 py-1.5 text-xs font-medium">
                 <FaGithub /> Code
               </a>
-              <a href="#" className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white"
+              <a href={p.live} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white"
                  style={{ backgroundImage: "var(--gradient-brand)" }}>
                 <FaExternalLinkAlt /> Live
               </a>
