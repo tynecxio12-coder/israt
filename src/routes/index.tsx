@@ -455,9 +455,16 @@ function Hero() {
             <MagneticButton primary onClick={() => scrollTo("contact")}>
               <FaEnvelope /> Contact Me
             </MagneticButton>
-            <MagneticButton onClick={() => window.print()}>
-              <FaDownload /> Download CV
-            </MagneticButton>
+            <MagneticButton
+  onClick={() => {
+    const link = document.createElement("a");
+    link.href = "/cv.pdf";
+    link.download = "Israt_Jahan_CV.pdf";
+    link.click();
+  }}
+>
+  <FaDownload /> Download CV
+</MagneticButton>
           </div>
           <div className="mt-10 flex items-center gap-5 text-muted-foreground">
             <a href={SOCIALS.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="hover:text-foreground transition"><FaGithub size={20} /></a>
