@@ -1,31 +1,34 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import {
   motion,
   useMotionValue,
   useScroll,
   useSpring,
-  useTransform,
   AnimatePresence,
   useInView,
 } from "framer-motion";
 import {
-  FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaJs, FaGitAlt, FaGithub,
-  FaBootstrap, FaFigma, FaLinkedin, FaFacebook, FaInstagram, FaTwitter,
+  FaReact, FaNodeJs, FaHtml5, FaCss3Alt, FaJs, FaGithub,
+  FaBootstrap, FaFacebook, FaInstagram,
   FaDownload, FaEnvelope, FaArrowUp, FaSun, FaMoon, FaMapMarkerAlt,
   FaCode, FaMobileAlt, FaRocket, FaPaintBrush, FaBolt, FaQuoteLeft,
-  FaStar, FaExternalLinkAlt, FaBars, FaTimes, FaChevronDown,
+  FaStar, FaExternalLinkAlt, FaBars, FaTimes, FaChevronDown, FaPhone,
 } from "react-icons/fa";
-import { SiExpress, SiMongodb, SiFirebase, SiTailwindcss, SiTypescript } from "react-icons/si";
+import { SiExpress, SiMongodb, SiFirebase, SiTailwindcss, SiTypescript, SiMysql, SiC } from "react-icons/si";
 import { HiOutlineSparkles } from "react-icons/hi2";
 
 import profileImg from "@/assets/israt-profile.jpg";
 import p1 from "@/assets/project-1.jpg";
 import p2 from "@/assets/project-2.jpg";
-import p3 from "@/assets/project-3.jpg";
-import p4 from "@/assets/project-4.jpg";
-import p5 from "@/assets/project-5.jpg";
-import p6 from "@/assets/project-6.jpg";
+
+const SOCIALS = {
+  github: "https://github.com/israt-158",
+  facebook: "https://www.facebook.com/israt.jahan.reya.2025",
+  instagram: "https://www.instagram.com/israt_jahan_reya2/",
+  email: "mailto:ijr4356@gmail.com",
+};
 
 export const Route = createFileRoute("/")({
   component: PortfolioPage,
@@ -44,65 +47,89 @@ const NAV = [
 ];
 
 const SKILLS = [
-  { name: "HTML5", icon: FaHtml5, level: 95, color: "#E44D26" },
-  { name: "CSS3", icon: FaCss3Alt, level: 92, color: "#1572B6" },
-  { name: "JavaScript", icon: FaJs, level: 90, color: "#F7DF1E" },
-  { name: "React", icon: FaReact, level: 93, color: "#61DAFB" },
-  { name: "Node.js", icon: FaNodeJs, level: 82, color: "#3C873A" },
-  { name: "Express", icon: SiExpress, level: 80, color: "#ffffff" },
-  { name: "MongoDB", icon: SiMongodb, level: 78, color: "#47A248" },
-  { name: "Firebase", icon: SiFirebase, level: 84, color: "#FFCA28" },
-  { name: "TypeScript", icon: SiTypescript, level: 85, color: "#3178C6" },
-  { name: "Tailwind", icon: SiTailwindcss, level: 94, color: "#38BDF8" },
-  { name: "Bootstrap", icon: FaBootstrap, level: 88, color: "#7952B3" },
-  { name: "Git & GitHub", icon: FaGithub, level: 90, color: "#ffffff" },
+  { name: "HTML5", icon: FaHtml5, level: 92, color: "#E44D26" },
+  { name: "CSS3", icon: FaCss3Alt, level: 90, color: "#1572B6" },
+  { name: "JavaScript", icon: FaJs, level: 85, color: "#F7DF1E" },
+  { name: "React", icon: FaReact, level: 78, color: "#61DAFB" },
+  { name: "Node.js", icon: FaNodeJs, level: 70, color: "#3C873A" },
+  { name: "Express", icon: SiExpress, level: 68, color: "#ffffff" },
+  { name: "MongoDB", icon: SiMongodb, level: 70, color: "#47A248" },
+  { name: "MySQL", icon: SiMysql, level: 80, color: "#00758F" },
+  { name: "C Programming", icon: SiC, level: 82, color: "#A8B9CC" },
+  { name: "Firebase", icon: SiFirebase, level: 72, color: "#FFCA28" },
+  { name: "TypeScript", icon: SiTypescript, level: 70, color: "#3178C6" },
+  { name: "Tailwind", icon: SiTailwindcss, level: 85, color: "#38BDF8" },
+  { name: "Bootstrap", icon: FaBootstrap, level: 85, color: "#7952B3" },
+  { name: "Git & GitHub", icon: FaGithub, level: 85, color: "#ffffff" },
 ];
 
 const SERVICES = [
-  { icon: FaCode, title: "Frontend Development", desc: "Pixel-perfect, performant interfaces built with React, TypeScript and modern tooling." },
-  { icon: FaMobileAlt, title: "Responsive Websites", desc: "Fluid layouts that shine on every device — mobile-first, accessible, and fast." },
-  { icon: FaPaintBrush, title: "UI / UX Design", desc: "Beautiful design systems, prototypes and interactions that users actually love." },
-  { icon: FaReact, title: "React Development", desc: "Scalable component architecture, custom hooks and animation-rich SPAs." },
-  { icon: FaBolt, title: "Web Optimization", desc: "Core Web Vitals, lazy loading, code-splitting — websites that fly." },
-  { icon: FaRocket, title: "Launch & Deploy", desc: "CI/CD, edge hosting and analytics so your product ships confidently." },
+  { icon: FaCode, title: "Frontend Development", desc: "Clean, responsive interfaces built with HTML, CSS, JavaScript and modern React." },
+  { icon: FaMobileAlt, title: "Responsive Websites", desc: "Mobile-first, accessible layouts that look great on every device." },
+  { icon: FaPaintBrush, title: "Social Media Marketing", desc: "Content strategy, community growth and audience engagement across platforms." },
+  { icon: FaReact, title: "React Development", desc: "Interactive UIs, reusable components and animation-rich single-page apps." },
+  { icon: FaBolt, title: "Content Creation", desc: "Copy, visuals and campaigns that turn scrolls into loyal followers." },
+  { icon: FaRocket, title: "Digital Marketing", desc: "End-to-end digital campaigns combining design, code and marketing craft." },
 ];
 
 const PROJECTS = [
-  { img: p1, title: "Nebula Dashboard", desc: "A glassmorphic analytics dashboard with real-time charts.", tech: ["React", "TypeScript"], category: "React" },
-  { img: p2, title: "Aurora Commerce", desc: "Modern e-commerce storefront with slick checkout.", tech: ["React", "Node.js", "Mongo"], category: "Full Stack" },
-  { img: p3, title: "Halo Chat", desc: "Realtime messaging app with playful micro-interactions.", tech: ["JavaScript", "Firebase"], category: "JavaScript" },
-  { img: p4, title: "Studio Portfolio", desc: "Award-style portfolio template with parallax reveals.", tech: ["React", "GSAP"], category: "React" },
-  { img: p5, title: "Pulse Analytics", desc: "SaaS analytics platform with role-based dashboards.", tech: ["React", "Node.js"], category: "Full Stack" },
-  { img: p6, title: "Bento Eats", desc: "Food delivery experience with a joyful mobile UI.", tech: ["JavaScript", "Tailwind"], category: "JavaScript" },
+  {
+    img: p1,
+    title: "Hospital Management System",
+    desc: "A MySQL-based system to manage patient records, doctor info, appointment scheduling and billing operations efficiently.",
+    tech: ["MySQL", "C", "SQL"],
+    category: "Database",
+    code: "https://github.com/israt-158/Hospital-Management-System",
+    live: "https://github.com/israt-158/Hospital-Management-System",
+  },
+  {
+    img: p2,
+    title: "Vehicle Rental System",
+    desc: "Vehicle rental system in C — booking, customer management, billing and file handling in a clean CLI workflow.",
+    tech: ["C", "File Handling"],
+    category: "C Programming",
+    code: "https://github.com/israt-158/Vehicle-Rental-system",
+    live: "https://github.com/israt-158/Vehicle-Rental-system",
+  },
 ];
 
-const PROJECT_FILTERS = ["All", "React", "JavaScript", "Full Stack"] as const;
+const PROJECT_FILTERS = ["All", "Database", "C Programming"] as const;
 
 const TIMELINE = [
-  { year: "2024 — Now", title: "Freelance Frontend Developer", place: "Remote", desc: "Shipping premium client sites and product UIs with a focus on animation and craft.", tag: "Work" },
-  { year: "2023 — 2024", title: "Frontend Engineer Intern", place: "Nova Labs", desc: "Built and maintained a design system used across 12 internal products.", tag: "Internship" },
-  { year: "2022", title: "Hackathon — Best Design", place: "CodeFest", desc: "Awarded for a collaborative real-time whiteboard app.", tag: "Achievement" },
-  { year: "2020 — 2024", title: "B.Sc. in Computer Science", place: "University", desc: "Graduated with distinction. Focused on human-computer interaction.", tag: "Education" },
+  {
+    year: "Jan 2026 — Present",
+    title: "Digital Marketing Head",
+    place: "TynecXio",
+    desc: "Leading digital marketing initiatives — content strategy, social campaigns and audience growth.",
+    tag: "Work",
+  },
+  {
+    year: "Jun 2024 — Present",
+    title: "Software Engineering Student",
+    place: "Daffodil International University",
+    desc: "Undergraduate in Software Engineering — focusing on web development, databases and software fundamentals.",
+    tag: "Education",
+  },
 ];
 
 const CERTIFICATES = [
-  { title: "Meta Frontend Developer", issuer: "Coursera", year: "2024" },
-  { title: "Advanced React & Redux", issuer: "Udemy", year: "2024" },
-  { title: "UI/UX Design Specialization", issuer: "CalArts", year: "2023" },
-  { title: "Responsive Web Design", issuer: "freeCodeCamp", year: "2023" },
+  { title: "Responsive Web Design", issuer: "freeCodeCamp", year: "2024" },
+  { title: "JavaScript Essentials", issuer: "Online Course", year: "2024" },
+  { title: "Social Media Marketing", issuer: "Meta / Coursera", year: "2025" },
+  { title: "C Programming", issuer: "University", year: "2024" },
 ];
 
 const TESTIMONIALS = [
-  { name: "Ayaan R.", role: "Product Manager, Nova", rating: 5, text: "Israt turned our vague brief into a stunning, animated product page. Conversions jumped 32%." },
-  { name: "Priya M.", role: "Founder, Halo", rating: 5, text: "Rare combination of design taste and clean code. Delivered on time and exceeded expectations." },
-  { name: "Marcus L.", role: "CTO, Pulse", rating: 5, text: "One of the most detail-obsessed frontend devs I've worked with. Micro-interactions everywhere." },
+  { name: "Team Lead", role: "TynecXio", rating: 5, text: "Israt brings creativity and consistency to every campaign — a rare mix of design taste and marketing instinct." },
+  { name: "Classmate", role: "Daffodil International University", rating: 5, text: "Great collaborator on group projects — thoughtful, reliable and always keen to learn." },
+  { name: "Peer Reviewer", role: "Software Engineering", rating: 5, text: "Her code is clean and her UI decisions feel deliberate. A joy to review." },
 ];
 
 const STATS = [
-  { value: 45, suffix: "+", label: "Projects Completed" },
-  { value: 30, suffix: "+", label: "Happy Clients" },
-  { value: 3,  suffix: "y", label: "Years Experience" },
-  { value: 12, suffix: "+", label: "Certificates" },
+  { value: 2, suffix: "+", label: "Projects Shipped" },
+  { value: 4, suffix: "+", label: "Certificates" },
+  { value: 1, suffix: "+", label: "Years at TynecXio" },
+  { value: 2, suffix: "+", label: "Years at DIU" },
 ];
 
 /* -------------------------- Root -------------------------- */
@@ -433,10 +460,10 @@ function Hero() {
             </MagneticButton>
           </div>
           <div className="mt-10 flex items-center gap-5 text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition"><FaGithub size={20} /></a>
-            <a href="#" className="hover:text-foreground transition"><FaLinkedin size={20} /></a>
-            <a href="#" className="hover:text-foreground transition"><FaTwitter size={20} /></a>
-            <a href="#" className="hover:text-foreground transition"><FaInstagram size={20} /></a>
+            <a href={SOCIALS.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="hover:text-foreground transition"><FaGithub size={20} /></a>
+            <a href={SOCIALS.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="hover:text-foreground transition"><FaFacebook size={20} /></a>
+            <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="hover:text-foreground transition"><FaInstagram size={20} /></a>
+            <a href={SOCIALS.email} aria-label="Email" className="hover:text-foreground transition"><FaEnvelope size={20} /></a>
           </div>
         </motion.div>
 
@@ -538,14 +565,14 @@ function About() {
           >
             <div className="absolute -top-16 -right-16 h-40 w-40 rounded-full"
                  style={{ backgroundImage: "var(--gradient-brand)", filter: "blur(40px)", opacity: 0.5 }} />
-            <img src={profileImg} alt="Israt" className="h-28 w-28 rounded-2xl object-cover" width={112} height={112} />
-            <h3 className="mt-5 text-2xl font-bold">Israt</h3>
-            <p className="text-muted-foreground">Frontend Developer · UI Designer</p>
+            <img src={profileImg} alt="Israt Jahan" className="h-28 w-28 rounded-2xl object-cover" width={112} height={112} />
+            <h3 className="mt-5 text-2xl font-bold">Israt Jahan</h3>
+            <p className="text-muted-foreground">Software Engineering Student · Digital Marketing Head</p>
             <div className="mt-6 space-y-2 text-sm">
               <Row k="Location" v="Dhaka, Bangladesh" />
-              <Row k="Email" v="hello@israt.dev" />
-              <Row k="Experience" v="3+ Years" />
-              <Row k="Freelance" v="Available" />
+              <Row k="Email" v="ijr4356@gmail.com" />
+              <Row k="Phone" v="+880-1635-745881" />
+              <Row k="Status" v="Open to opportunities" />
             </div>
           </motion.div>
 
@@ -555,22 +582,22 @@ function About() {
             className="lg:col-span-3 space-y-5"
           >
             <p className="text-lg leading-relaxed">
-              I'm a frontend developer who lives at the intersection of{" "}
-              <span className="gradient-text font-semibold">design</span> and{" "}
-              <span className="gradient-text font-semibold">code</span>.
-              For the past few years I've helped startups and creators launch
-              beautifully-crafted, high-performing products — from marketing
-              sites to full SaaS dashboards.
+              I'm a <span className="gradient-text font-semibold">Software Engineering</span> undergraduate
+              with a strong foundation in <span className="gradient-text font-semibold">web development</span> and
+              <span className="gradient-text font-semibold"> digital marketing</span>. Skilled in HTML, CSS,
+              JavaScript, software development fundamentals, social media marketing, content creation
+              and audience engagement.
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              When I'm not coding you'll find me sketching interfaces, exploring
-              motion design, or geeking out over color palettes.
+              I'm passionate about building user-focused digital solutions by combining technical
+              expertise with creative marketing strategies — a quick learner with strong problem-solving,
+              communication and teamwork skills.
             </p>
             <div className="grid sm:grid-cols-2 gap-4 pt-2">
-              <Feature icon={FaBolt} title="Fast" desc="Snappy UIs, obsessed with Core Web Vitals." />
-              <Feature icon={FaPaintBrush} title="Design-led" desc="Every pixel considered — motion included." />
-              <Feature icon={FaCode} title="Clean Code" desc="Typed, modular and easy to iterate on." />
-              <Feature icon={FaRocket} title="Shipping" desc="From Figma to production — end to end." />
+              <Feature icon={FaCode} title="Web Development" desc="HTML, CSS, JavaScript and modern React." />
+              <Feature icon={FaPaintBrush} title="Digital Marketing" desc="Content, campaigns and community growth." />
+              <Feature icon={FaBolt} title="Fast Learner" desc="Quickly pick up tools, frameworks and workflows." />
+              <Feature icon={FaRocket} title="Team Player" desc="Strong communication and collaboration." />
             </div>
           </motion.div>
         </div>
@@ -808,10 +835,10 @@ function ProjectCard({ p, i }: { p: typeof PROJECTS[number]; i: number }) {
             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition"
                  style={{ background: "linear-gradient(180deg, transparent, rgba(15,23,42,0.85))" }} />
             <div className="absolute inset-x-4 bottom-4 flex gap-2 opacity-0 group-hover:opacity-100 transition translate-y-2 group-hover:translate-y-0">
-              <a href="#" className="inline-flex items-center gap-1.5 rounded-full glass px-3 py-1.5 text-xs font-medium">
+              <a href={p.code} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-full glass px-3 py-1.5 text-xs font-medium">
                 <FaGithub /> Code
               </a>
-              <a href="#" className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white"
+              <a href={p.live} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-white"
                  style={{ backgroundImage: "var(--gradient-brand)" }}>
                 <FaExternalLinkAlt /> Live
               </a>
@@ -954,9 +981,11 @@ function Testimonials() {
 /* -------------------------- Contact -------------------------- */
 
 function Contact() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -968,12 +997,42 @@ function Contact() {
     return Object.keys(e).length === 0;
   };
 
-  const submit = (ev: React.FormEvent) => {
+  const submit = async (ev: React.FormEvent) => {
     ev.preventDefault();
     if (!validate()) return;
-    setSent(true);
-    setForm({ name: "", email: "", subject: "", message: "" });
-    setTimeout(() => setSent(false), 4000);
+
+    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string | undefined;
+    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string | undefined;
+    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string | undefined;
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      setStatus("error");
+      setErrorMsg("EmailJS keys are not set yet. Add VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID and VITE_EMAILJS_PUBLIC_KEY to your .env file.");
+      return;
+    }
+
+    try {
+      setStatus("sending");
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          subject: form.subject,
+          message: form.message,
+          to_email: "ijr4356@gmail.com",
+        },
+        { publicKey: PUBLIC_KEY },
+      );
+      setStatus("sent");
+      setForm({ name: "", email: "", subject: "", message: "" });
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+      setErrorMsg("Something went wrong sending your message. Please try again or email ijr4356@gmail.com directly.");
+    }
   };
 
   return (
@@ -986,15 +1045,24 @@ function Contact() {
             viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="lg:col-span-2 space-y-4"
           >
-            <div className="glass rounded-3xl p-6 flex items-center gap-4">
+            <a href={SOCIALS.email} className="glass rounded-3xl p-6 flex items-center gap-4 hover:-translate-y-1 transition">
               <div className="grid h-12 w-12 place-items-center rounded-2xl text-white" style={{ backgroundImage: "var(--gradient-brand)" }}>
                 <FaEnvelope />
               </div>
               <div>
                 <div className="text-xs text-muted-foreground">Email</div>
-                <div className="font-semibold">hello@israt.dev</div>
+                <div className="font-semibold">ijr4356@gmail.com</div>
               </div>
-            </div>
+            </a>
+            <a href="tel:+8801635745881" className="glass rounded-3xl p-6 flex items-center gap-4 hover:-translate-y-1 transition">
+              <div className="grid h-12 w-12 place-items-center rounded-2xl text-white" style={{ backgroundImage: "var(--gradient-brand)" }}>
+                <FaPhone />
+              </div>
+              <div>
+                <div className="text-xs text-muted-foreground">Phone</div>
+                <div className="font-semibold">+880-1635-745881</div>
+              </div>
+            </a>
             <div className="glass rounded-3xl p-6 flex items-center gap-4">
               <div className="grid h-12 w-12 place-items-center rounded-2xl text-white" style={{ backgroundImage: "var(--gradient-brand)" }}>
                 <FaMapMarkerAlt />
@@ -1013,13 +1081,15 @@ function Contact() {
               />
             </div>
             <div className="glass rounded-3xl p-6 flex items-center justify-around text-xl">
-              {[FaGithub, FaLinkedin, FaFacebook, FaInstagram, FaTwitter].map((Ic, i) => (
-                <a key={i} href="#" className="hover:gradient-text transition"><Ic /></a>
-              ))}
+              <a href={SOCIALS.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="hover:gradient-text transition"><FaGithub /></a>
+              <a href={SOCIALS.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="hover:gradient-text transition"><FaFacebook /></a>
+              <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="hover:gradient-text transition"><FaInstagram /></a>
+              <a href={SOCIALS.email} aria-label="Email" className="hover:gradient-text transition"><FaEnvelope /></a>
             </div>
           </motion.div>
 
           <motion.form
+            ref={formRef}
             onSubmit={submit}
             initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.6 }}
@@ -1027,34 +1097,42 @@ function Contact() {
           >
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Name" error={errors.name}>
-                <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
+                <input name="from_name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
                   className="input" placeholder="Your name" maxLength={80} />
               </Field>
               <Field label="Email" error={errors.email}>
-                <input value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
+                <input name="from_email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
                   className="input" placeholder="you@email.com" maxLength={120} />
               </Field>
             </div>
             <Field label="Subject" error={errors.subject}>
-              <input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })}
+              <input name="subject" value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })}
                 className="input" placeholder="What's it about?" maxLength={120} />
             </Field>
             <Field label="Message" error={errors.message}>
-              <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
+              <textarea name="message" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
                 rows={5} className="input resize-none" placeholder="Tell me about your project…" maxLength={1000} />
             </Field>
-            <button type="submit"
-              className="relative inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] hover:scale-[1.02] transition"
+            <button type="submit" disabled={status === "sending"}
+              className="relative inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] hover:scale-[1.02] transition disabled:opacity-60 disabled:cursor-not-allowed"
               style={{ backgroundImage: "var(--gradient-brand)" }}>
-              Send Message
+              {status === "sending" ? "Sending…" : "Send Message"}
             </button>
             <AnimatePresence>
-              {sent && (
+              {status === "sent" && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                   className="rounded-2xl bg-emerald-500/15 text-emerald-300 px-4 py-3 text-sm"
                 >
                   ✓ Thanks! Your message has been sent.
+                </motion.div>
+              )}
+              {status === "error" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                  className="rounded-2xl bg-rose-500/15 text-rose-300 px-4 py-3 text-sm"
+                >
+                  {errorMsg}
                 </motion.div>
               )}
             </AnimatePresence>
@@ -1107,7 +1185,7 @@ function Footer() {
               <span className="font-display text-lg font-semibold">Israt<span className="gradient-text">.</span></span>
             </div>
             <p className="mt-3 text-sm text-muted-foreground max-w-xs">
-              Frontend developer crafting animated, premium web experiences.
+              Software Engineering undergraduate blending web development with digital marketing.
             </p>
           </div>
           <div>
@@ -1123,8 +1201,13 @@ function Footer() {
           <div>
             <div className="text-sm font-semibold mb-3">Social</div>
             <div className="flex gap-3">
-              {[FaGithub, FaLinkedin, FaFacebook, FaInstagram, FaTwitter].map((Ic, i) => (
-                <a key={i} href="#"
+              {([
+                { Ic: FaGithub, href: SOCIALS.github, label: "GitHub" },
+                { Ic: FaFacebook, href: SOCIALS.facebook, label: "Facebook" },
+                { Ic: FaInstagram, href: SOCIALS.instagram, label: "Instagram" },
+                { Ic: FaEnvelope, href: SOCIALS.email, label: "Email" },
+              ]).map(({ Ic, href, label }) => (
+                <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}
                    className="grid h-10 w-10 place-items-center rounded-full glass hover:-translate-y-1 transition">
                   <Ic />
                 </a>
