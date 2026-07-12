@@ -1201,8 +1201,13 @@ function Footer() {
           <div>
             <div className="text-sm font-semibold mb-3">Social</div>
             <div className="flex gap-3">
-              {[FaGithub, FaLinkedin, FaFacebook, FaInstagram, FaTwitter].map((Ic, i) => (
-                <a key={i} href="#"
+              {([
+                { Ic: FaGithub, href: SOCIALS.github, label: "GitHub" },
+                { Ic: FaFacebook, href: SOCIALS.facebook, label: "Facebook" },
+                { Ic: FaInstagram, href: SOCIALS.instagram, label: "Instagram" },
+                { Ic: FaEnvelope, href: SOCIALS.email, label: "Email" },
+              ]).map(({ Ic, href, label }) => (
+                <a key={label} href={href} target="_blank" rel="noreferrer" aria-label={label}
                    className="grid h-10 w-10 place-items-center rounded-full glass hover:-translate-y-1 transition">
                   <Ic />
                 </a>
