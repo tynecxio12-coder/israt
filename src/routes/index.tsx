@@ -47,65 +47,89 @@ const NAV = [
 ];
 
 const SKILLS = [
-  { name: "HTML5", icon: FaHtml5, level: 95, color: "#E44D26" },
-  { name: "CSS3", icon: FaCss3Alt, level: 92, color: "#1572B6" },
-  { name: "JavaScript", icon: FaJs, level: 90, color: "#F7DF1E" },
-  { name: "React", icon: FaReact, level: 93, color: "#61DAFB" },
-  { name: "Node.js", icon: FaNodeJs, level: 82, color: "#3C873A" },
-  { name: "Express", icon: SiExpress, level: 80, color: "#ffffff" },
-  { name: "MongoDB", icon: SiMongodb, level: 78, color: "#47A248" },
-  { name: "Firebase", icon: SiFirebase, level: 84, color: "#FFCA28" },
-  { name: "TypeScript", icon: SiTypescript, level: 85, color: "#3178C6" },
-  { name: "Tailwind", icon: SiTailwindcss, level: 94, color: "#38BDF8" },
-  { name: "Bootstrap", icon: FaBootstrap, level: 88, color: "#7952B3" },
-  { name: "Git & GitHub", icon: FaGithub, level: 90, color: "#ffffff" },
+  { name: "HTML5", icon: FaHtml5, level: 92, color: "#E44D26" },
+  { name: "CSS3", icon: FaCss3Alt, level: 90, color: "#1572B6" },
+  { name: "JavaScript", icon: FaJs, level: 85, color: "#F7DF1E" },
+  { name: "React", icon: FaReact, level: 78, color: "#61DAFB" },
+  { name: "Node.js", icon: FaNodeJs, level: 70, color: "#3C873A" },
+  { name: "Express", icon: SiExpress, level: 68, color: "#ffffff" },
+  { name: "MongoDB", icon: SiMongodb, level: 70, color: "#47A248" },
+  { name: "MySQL", icon: SiMysql, level: 80, color: "#00758F" },
+  { name: "C Programming", icon: SiC, level: 82, color: "#A8B9CC" },
+  { name: "Firebase", icon: SiFirebase, level: 72, color: "#FFCA28" },
+  { name: "TypeScript", icon: SiTypescript, level: 70, color: "#3178C6" },
+  { name: "Tailwind", icon: SiTailwindcss, level: 85, color: "#38BDF8" },
+  { name: "Bootstrap", icon: FaBootstrap, level: 85, color: "#7952B3" },
+  { name: "Git & GitHub", icon: FaGithub, level: 85, color: "#ffffff" },
 ];
 
 const SERVICES = [
-  { icon: FaCode, title: "Frontend Development", desc: "Pixel-perfect, performant interfaces built with React, TypeScript and modern tooling." },
-  { icon: FaMobileAlt, title: "Responsive Websites", desc: "Fluid layouts that shine on every device — mobile-first, accessible, and fast." },
-  { icon: FaPaintBrush, title: "UI / UX Design", desc: "Beautiful design systems, prototypes and interactions that users actually love." },
-  { icon: FaReact, title: "React Development", desc: "Scalable component architecture, custom hooks and animation-rich SPAs." },
-  { icon: FaBolt, title: "Web Optimization", desc: "Core Web Vitals, lazy loading, code-splitting — websites that fly." },
-  { icon: FaRocket, title: "Launch & Deploy", desc: "CI/CD, edge hosting and analytics so your product ships confidently." },
+  { icon: FaCode, title: "Frontend Development", desc: "Clean, responsive interfaces built with HTML, CSS, JavaScript and modern React." },
+  { icon: FaMobileAlt, title: "Responsive Websites", desc: "Mobile-first, accessible layouts that look great on every device." },
+  { icon: FaPaintBrush, title: "Social Media Marketing", desc: "Content strategy, community growth and audience engagement across platforms." },
+  { icon: FaReact, title: "React Development", desc: "Interactive UIs, reusable components and animation-rich single-page apps." },
+  { icon: FaBolt, title: "Content Creation", desc: "Copy, visuals and campaigns that turn scrolls into loyal followers." },
+  { icon: FaRocket, title: "Digital Marketing", desc: "End-to-end digital campaigns combining design, code and marketing craft." },
 ];
 
 const PROJECTS = [
-  { img: p1, title: "Nebula Dashboard", desc: "A glassmorphic analytics dashboard with real-time charts.", tech: ["React", "TypeScript"], category: "React" },
-  { img: p2, title: "Aurora Commerce", desc: "Modern e-commerce storefront with slick checkout.", tech: ["React", "Node.js", "Mongo"], category: "Full Stack" },
-  { img: p3, title: "Halo Chat", desc: "Realtime messaging app with playful micro-interactions.", tech: ["JavaScript", "Firebase"], category: "JavaScript" },
-  { img: p4, title: "Studio Portfolio", desc: "Award-style portfolio template with parallax reveals.", tech: ["React", "GSAP"], category: "React" },
-  { img: p5, title: "Pulse Analytics", desc: "SaaS analytics platform with role-based dashboards.", tech: ["React", "Node.js"], category: "Full Stack" },
-  { img: p6, title: "Bento Eats", desc: "Food delivery experience with a joyful mobile UI.", tech: ["JavaScript", "Tailwind"], category: "JavaScript" },
+  {
+    img: p1,
+    title: "Hospital Management System",
+    desc: "A MySQL-based system to manage patient records, doctor info, appointment scheduling and billing operations efficiently.",
+    tech: ["MySQL", "C", "SQL"],
+    category: "Database",
+    code: "https://github.com/israt-158/Hospital-Management-System",
+    live: "https://github.com/israt-158/Hospital-Management-System",
+  },
+  {
+    img: p2,
+    title: "Vehicle Rental System",
+    desc: "Vehicle rental system in C — booking, customer management, billing and file handling in a clean CLI workflow.",
+    tech: ["C", "File Handling"],
+    category: "C Programming",
+    code: "https://github.com/israt-158/Vehicle-Rental-system",
+    live: "https://github.com/israt-158/Vehicle-Rental-system",
+  },
 ];
 
-const PROJECT_FILTERS = ["All", "React", "JavaScript", "Full Stack"] as const;
+const PROJECT_FILTERS = ["All", "Database", "C Programming"] as const;
 
 const TIMELINE = [
-  { year: "2024 — Now", title: "Freelance Frontend Developer", place: "Remote", desc: "Shipping premium client sites and product UIs with a focus on animation and craft.", tag: "Work" },
-  { year: "2023 — 2024", title: "Frontend Engineer Intern", place: "Nova Labs", desc: "Built and maintained a design system used across 12 internal products.", tag: "Internship" },
-  { year: "2022", title: "Hackathon — Best Design", place: "CodeFest", desc: "Awarded for a collaborative real-time whiteboard app.", tag: "Achievement" },
-  { year: "2020 — 2024", title: "B.Sc. in Computer Science", place: "University", desc: "Graduated with distinction. Focused on human-computer interaction.", tag: "Education" },
+  {
+    year: "Jan 2026 — Present",
+    title: "Digital Marketing Head",
+    place: "TynecXio",
+    desc: "Leading digital marketing initiatives — content strategy, social campaigns and audience growth.",
+    tag: "Work",
+  },
+  {
+    year: "Jun 2024 — Present",
+    title: "Software Engineering Student",
+    place: "Daffodil International University",
+    desc: "Undergraduate in Software Engineering — focusing on web development, databases and software fundamentals.",
+    tag: "Education",
+  },
 ];
 
 const CERTIFICATES = [
-  { title: "Meta Frontend Developer", issuer: "Coursera", year: "2024" },
-  { title: "Advanced React & Redux", issuer: "Udemy", year: "2024" },
-  { title: "UI/UX Design Specialization", issuer: "CalArts", year: "2023" },
-  { title: "Responsive Web Design", issuer: "freeCodeCamp", year: "2023" },
+  { title: "Responsive Web Design", issuer: "freeCodeCamp", year: "2024" },
+  { title: "JavaScript Essentials", issuer: "Online Course", year: "2024" },
+  { title: "Social Media Marketing", issuer: "Meta / Coursera", year: "2025" },
+  { title: "C Programming", issuer: "University", year: "2024" },
 ];
 
 const TESTIMONIALS = [
-  { name: "Ayaan R.", role: "Product Manager, Nova", rating: 5, text: "Israt turned our vague brief into a stunning, animated product page. Conversions jumped 32%." },
-  { name: "Priya M.", role: "Founder, Halo", rating: 5, text: "Rare combination of design taste and clean code. Delivered on time and exceeded expectations." },
-  { name: "Marcus L.", role: "CTO, Pulse", rating: 5, text: "One of the most detail-obsessed frontend devs I've worked with. Micro-interactions everywhere." },
+  { name: "Team Lead", role: "TynecXio", rating: 5, text: "Israt brings creativity and consistency to every campaign — a rare mix of design taste and marketing instinct." },
+  { name: "Classmate", role: "Daffodil International University", rating: 5, text: "Great collaborator on group projects — thoughtful, reliable and always keen to learn." },
+  { name: "Peer Reviewer", role: "Software Engineering", rating: 5, text: "Her code is clean and her UI decisions feel deliberate. A joy to review." },
 ];
 
 const STATS = [
-  { value: 45, suffix: "+", label: "Projects Completed" },
-  { value: 30, suffix: "+", label: "Happy Clients" },
-  { value: 3,  suffix: "y", label: "Years Experience" },
-  { value: 12, suffix: "+", label: "Certificates" },
+  { value: 2, suffix: "+", label: "Projects Shipped" },
+  { value: 4, suffix: "+", label: "Certificates" },
+  { value: 1, suffix: "+", label: "Years at TynecXio" },
+  { value: 2, suffix: "+", label: "Years at DIU" },
 ];
 
 /* -------------------------- Root -------------------------- */
