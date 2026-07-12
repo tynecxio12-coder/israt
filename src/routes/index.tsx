@@ -460,10 +460,10 @@ function Hero() {
             </MagneticButton>
           </div>
           <div className="mt-10 flex items-center gap-5 text-muted-foreground">
-            <a href="#" className="hover:text-foreground transition"><FaGithub size={20} /></a>
-            <a href="#" className="hover:text-foreground transition"><FaLinkedin size={20} /></a>
-            <a href="#" className="hover:text-foreground transition"><FaTwitter size={20} /></a>
-            <a href="#" className="hover:text-foreground transition"><FaInstagram size={20} /></a>
+            <a href={SOCIALS.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="hover:text-foreground transition"><FaGithub size={20} /></a>
+            <a href={SOCIALS.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="hover:text-foreground transition"><FaFacebook size={20} /></a>
+            <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="hover:text-foreground transition"><FaInstagram size={20} /></a>
+            <a href={SOCIALS.email} aria-label="Email" className="hover:text-foreground transition"><FaEnvelope size={20} /></a>
           </div>
         </motion.div>
 
