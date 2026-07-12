@@ -981,9 +981,11 @@ function Testimonials() {
 /* -------------------------- Contact -------------------------- */
 
 function Contact() {
+  const formRef = useRef<HTMLFormElement>(null);
   const [form, setForm] = useState({ name: "", email: "", subject: "", message: "" });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [sent, setSent] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  const [errorMsg, setErrorMsg] = useState("");
 
   const validate = () => {
     const e: Record<string, string> = {};
@@ -995,12 +997,42 @@ function Contact() {
     return Object.keys(e).length === 0;
   };
 
-  const submit = (ev: React.FormEvent) => {
+  const submit = async (ev: React.FormEvent) => {
     ev.preventDefault();
     if (!validate()) return;
-    setSent(true);
-    setForm({ name: "", email: "", subject: "", message: "" });
-    setTimeout(() => setSent(false), 4000);
+
+    const SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID as string | undefined;
+    const TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID as string | undefined;
+    const PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY as string | undefined;
+
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      setStatus("error");
+      setErrorMsg("EmailJS keys are not set yet. Add VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID and VITE_EMAILJS_PUBLIC_KEY to your .env file.");
+      return;
+    }
+
+    try {
+      setStatus("sending");
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          subject: form.subject,
+          message: form.message,
+          to_email: "ijr4356@gmail.com",
+        },
+        { publicKey: PUBLIC_KEY },
+      );
+      setStatus("sent");
+      setForm({ name: "", email: "", subject: "", message: "" });
+      setTimeout(() => setStatus("idle"), 5000);
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+      setErrorMsg("Something went wrong sending your message. Please try again or email ijr4356@gmail.com directly.");
+    }
   };
 
   return (
@@ -1013,15 +1045,24 @@ function Contact() {
             viewport={{ once: true }} transition={{ duration: 0.6 }}
             className="lg:col-span-2 space-y-4"
           >
-            <div className="glass rounded-3xl p-6 flex items-center gap-4">
+            <a href={SOCIALS.email} className="glass rounded-3xl p-6 flex items-center gap-4 hover:-translate-y-1 transition">
               <div className="grid h-12 w-12 place-items-center rounded-2xl text-white" style={{ backgroundImage: "var(--gradient-brand)" }}>
                 <FaEnvelope />
               </div>
               <div>
                 <div className="text-xs text-muted-foreground">Email</div>
-                <div className="font-semibold">hello@israt.dev</div>
+                <div className="font-semibold">ijr4356@gmail.com</div>
               </div>
-            </div>
+            </a>
+            <a href="tel:+8801635745881" className="glass rounded-3xl p-6 flex items-center gap-4 hover:-translate-y-1 transition">
+              <div className="grid h-12 w-12 place-items-center rounded-2xl text-white" style={{ backgroundImage: "var(--gradient-brand)" }}>
+                <FaPhone />
+              </div>
+              <div>
+                <div className="text-xs text-muted-foreground">Phone</div>
+                <div className="font-semibold">+880-1635-745881</div>
+              </div>
+            </a>
             <div className="glass rounded-3xl p-6 flex items-center gap-4">
               <div className="grid h-12 w-12 place-items-center rounded-2xl text-white" style={{ backgroundImage: "var(--gradient-brand)" }}>
                 <FaMapMarkerAlt />
@@ -1040,13 +1081,15 @@ function Contact() {
               />
             </div>
             <div className="glass rounded-3xl p-6 flex items-center justify-around text-xl">
-              {[FaGithub, FaLinkedin, FaFacebook, FaInstagram, FaTwitter].map((Ic, i) => (
-                <a key={i} href="#" className="hover:gradient-text transition"><Ic /></a>
-              ))}
+              <a href={SOCIALS.github} target="_blank" rel="noreferrer" aria-label="GitHub" className="hover:gradient-text transition"><FaGithub /></a>
+              <a href={SOCIALS.facebook} target="_blank" rel="noreferrer" aria-label="Facebook" className="hover:gradient-text transition"><FaFacebook /></a>
+              <a href={SOCIALS.instagram} target="_blank" rel="noreferrer" aria-label="Instagram" className="hover:gradient-text transition"><FaInstagram /></a>
+              <a href={SOCIALS.email} aria-label="Email" className="hover:gradient-text transition"><FaEnvelope /></a>
             </div>
           </motion.div>
 
           <motion.form
+            ref={formRef}
             onSubmit={submit}
             initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }} transition={{ duration: 0.6 }}
@@ -1054,34 +1097,42 @@ function Contact() {
           >
             <div className="grid sm:grid-cols-2 gap-4">
               <Field label="Name" error={errors.name}>
-                <input value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
+                <input name="from_name" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })}
                   className="input" placeholder="Your name" maxLength={80} />
               </Field>
               <Field label="Email" error={errors.email}>
-                <input value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
+                <input name="from_email" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })}
                   className="input" placeholder="you@email.com" maxLength={120} />
               </Field>
             </div>
             <Field label="Subject" error={errors.subject}>
-              <input value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })}
+              <input name="subject" value={form.subject} onChange={e => setForm({ ...form, subject: e.target.value })}
                 className="input" placeholder="What's it about?" maxLength={120} />
             </Field>
             <Field label="Message" error={errors.message}>
-              <textarea value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
+              <textarea name="message" value={form.message} onChange={e => setForm({ ...form, message: e.target.value })}
                 rows={5} className="input resize-none" placeholder="Tell me about your project…" maxLength={1000} />
             </Field>
-            <button type="submit"
-              className="relative inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] hover:scale-[1.02] transition"
+            <button type="submit" disabled={status === "sending"}
+              className="relative inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-semibold text-white shadow-[var(--shadow-glow)] hover:scale-[1.02] transition disabled:opacity-60 disabled:cursor-not-allowed"
               style={{ backgroundImage: "var(--gradient-brand)" }}>
-              Send Message
+              {status === "sending" ? "Sending…" : "Send Message"}
             </button>
             <AnimatePresence>
-              {sent && (
+              {status === "sent" && (
                 <motion.div
                   initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
                   className="rounded-2xl bg-emerald-500/15 text-emerald-300 px-4 py-3 text-sm"
                 >
                   ✓ Thanks! Your message has been sent.
+                </motion.div>
+              )}
+              {status === "error" && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+                  className="rounded-2xl bg-rose-500/15 text-rose-300 px-4 py-3 text-sm"
+                >
+                  {errorMsg}
                 </motion.div>
               )}
             </AnimatePresence>
